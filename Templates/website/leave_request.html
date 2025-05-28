@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div id="request" style="margin-right:19%;padding:1%;">
+      <h1>درخواست مرخصی</h1>
+      <form method="post" action="/leave-request/">
+        {% csrf_token %}
+        {{form}}
+        {% comment %} <label for="start">تاریخ شروع:</label>
+        <input type="date" id="start",name='start_day'>
+        <label for="end">تاریخ پایان:</label>
+        <input type="date" id="end",name='end_day'>
+        <label for="reason">دلیل مرخصی:</label>
+        <textarea id="reason",name='description'></textarea> {% endcomment %}
+        <button type="submit">ارسال درخواست</button>
+      </form>
+    </div>
+{% endblock %}
