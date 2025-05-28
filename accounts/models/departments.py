@@ -3,7 +3,6 @@ from .users import User
 
 class Department(models.Model):
     DEPARTMENT_CHOICES = (
-        ('unknown', 'تعریف نشده'),
         ('admin', 'مدیر سیستم'),
         ('manager', 'مدیریت'),
         ('site', 'سایت'),
@@ -16,9 +15,10 @@ class Department(models.Model):
         ('formal', 'حضوری'),
         ('content', 'محتوا'),
     )
-    name = models.CharField(max_length=35, choices=DEPARTMENT_CHOICES)
+    department = models.CharField(max_length=35, choices=DEPARTMENT_CHOICES)
     supervisor = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,blank=True, related_name="supervisor_departments")
     manager = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,blank=True, related_name="managed_departments")
 
     def __str__(self):
-        return self.name
+        return self.department
+    

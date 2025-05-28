@@ -12,15 +12,36 @@
   <div id="notification"></div>
   <div class="sidebar">
     <h2>پنل سازمان</h2>
+    
+    {% if user_role == 'employee' %}
     <a href="{%url 'website:index'%}" onclick="showSection('dashboard')">داشبورد</a>
-     <a href="{% url 'website:calender' %}" onclick="showSection('calendar')">تقویم کاری</a>
+    <a href="{% url 'website:calender' %}" onclick="showSection('calendar')">تقویم کاری</a>
     <a href="{% url 'website:leave_request' %}" onclick="showSection('request')">درخواست مرخصی</a>
-    <a href="#" onclick="showSection('status')">وضعیت درخواست‌ها</a>
-    <a href="#" onclick="showSection('manager-check')">بررسی مدیر بخش</a>
-    <a href="#" onclick="showSection('final-approval')">تایید نهایی</a>
-    {% if is_employee == 'NotNone' %}
-    <a href="#" onclick="showSection('final-approval')">درخواست کارمندان</a>
+    <a href="{% url 'website:list_request' %}" onclick="showSection('status')">وضعیت درخواست‌ها</a>
+    
+    {% elif user_role == 'supervisor' %}
+    <a href="{%url 'website:index'%}" onclick="showSection('dashboard')">داشبورد</a>
+    <a href="{% url 'website:calender' %}" onclick="showSection('calendar')">تقویم کاری</a>
+    <a href="{% url 'website:leave_request' %}" onclick="showSection('request')">درخواست مرخصی</a>
+    <a href="{% url 'website:list_request' %}" onclick="showSection('status')">وضعیت درخواست‌ها</a>
+    <a href="#" onclick="showSection('manager-check')">بررسی درخواست های ارسالی</a>
+    
+    {% elif user_role == 'department_manager' %}
+    <a href="{% url 'website:calender' %}" onclick="showSection('calendar')">تنظیم تقویم کاری</a>
+    <a href="{% url 'website:leave_request' %}" onclick="showSection('request')">درخواست مرخصی</a>
+    <a href="{% url 'website:list_request' %}" onclick="showSection('status')">وضعیت درخواست‌ها</a>
+    <a href="#" onclick="showSection('manager-check')">بررسی درخواست های ارسالی</a>
+    
+    {% elif user_role == 'human_resources' %}
+    <a href="{% url 'website:calender' %}" onclick="showSection('calendar')">تقویم کاری</a>
+    <a href="{% url 'website:leave_request' %}" onclick="showSection('request')">درخواست مرخصی</a>
+    <a href="{% url 'website:list_request' %}" onclick="showSection('status')">وضعیت درخواست‌ها</a>
+    <a href="#" onclick="showSection('manager-check')">بررسی درخواست های ارسالی</a>
+    
+    {% elif user_role == 'manager' %}
+    <a href="#" onclick="showSection('manager-check')">بررسی درخواست های ارسالی</a>
     {% endif %}
+  
   </div>
   {% block content %}
   {% endblock %}

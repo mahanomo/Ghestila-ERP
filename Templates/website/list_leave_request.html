@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div id="status" style="float:right;margin-right:18%; width:80%;">
+    <h1>وضعیت درخواست‌ها</h1>
+    {% if requests %}
+    {% for request in requests %}
+        <div class="request-box">
+            <p>درخواست مرخصی از {{request.start_day}} تا {{request.end_day}}</p>
+            <p><a href='{% url "website:single_view_request" pid=request.id %}'>مشاهده ی وضعیت</a></p>
+            
+        </div>
+        {% endfor %}
+    {% else %}
+         <div class="request-box">
+            <p>درخواستی برای مشاهده وجود ندارد</p>
+    {% endif %}
+    </div>
+
+{% endblock content %}

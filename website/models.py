@@ -31,4 +31,11 @@ class LeaveRequest(models.Model):
     created_at = models.DateTimeField(auto_now_add=True) 
 
     def __str__(self):
-        return f'درخواست مرخصی{self.user} از تاریخ {self.start_day} تا {self.end_day}'
+        return f'درخواست مرخصی {self.user.full_name} از تاریخ {self.start_day} تا {self.end_day}'
+    
+class StatusDiscoverImage(models.Model):
+    status = models.CharField(max_length=30)
+    image = models.ImageField()
+
+    def __str__(self):
+        return self.status

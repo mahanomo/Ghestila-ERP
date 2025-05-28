@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, Profile, Department
+from .models import User, Department
 
 # Register your models here.
 class CustomUserAdmin(UserAdmin):
@@ -8,7 +8,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = ("username", "full_name", "role","is_verified")
     list_filter = ("is_staff", "role","is_verified")
     fieldsets = (
-        ("Authenticate", {"fields": ("username", "password","role","is_verified")}),
+        ("Authenticate", {"fields": ("username", "password","role","department","is_verified","is_staff")}),
         # (
         #     "Permissions",
         #     {
@@ -45,5 +45,5 @@ class CustomUserAdmin(UserAdmin):
 
 
 admin.site.register(User, CustomUserAdmin)
-admin.site.register(Profile)
+# admin.site.register(Profile)
 admin.site.register(Department)

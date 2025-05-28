@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div id="status" style="float:right;margin-right:19%;">
+    <h1>وضعیت درخواست‌</h1>
+        <div class="request-box">
+            {{detail.status}}
+            {% if detail.status == 'pending_1' %}
+            <img src='{{show_status.8.image.url}}'style='width:90%;' />
+            
+            {% elif detail.status == 'approved_1' %}
+            <img src='{{show_status.7.image.url}}'style='width:90%;' />
+            
+            {% elif detail.status == 'rejected_1' %}
+            <img src='{{show_status.6.image.url}}'style='width:90%;' />
+            
+            {% elif detail.status == 'approved_2' %}
+            <img src='{{show_status.4.image.url}}'style='width:90%;' />
+            
+            {% elif detail.status == 'rejected_2' %}
+            <img src='{{show_status.5.image.url}}'style='width:90%;' />
+            
+            {% elif detail.status == 'approved_3' %}
+            <img src='{{show_status.2.image.url}}'style='width:90%;' />
+            
+            {% elif detail.status == 'rejected_3' %}
+            <img src='{{show_status.3.image.url}}'style='width:90%;' />
+            
+            {% elif detail.status == 'approved_4' %}
+            <img src='{{show_status.0.image.url}}'style='width:90%;' />
+            
+            {% elif detail.status == 'rejected_4' %}
+            <img src='{{show_status.1.image.url}}'style='width:90%;' />
+            {% endif %}
+            
+        </div>
+    </div>
+
+{% endblock content %}

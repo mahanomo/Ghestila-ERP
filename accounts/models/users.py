@@ -25,14 +25,20 @@ class User(AbstractBaseUser, PermissionsMixin):
         ('supervisor', 'سرپرست'),
         ('employee', 'کارمند'),
     )
-
+    
     username = models.CharField(max_length=45,unique=True)
     full_name = models.CharField(max_length=100)
     role = models.CharField(max_length=30, choices=ROLE_CHOICES, default='employee')
-    # departman = models.ForeignKey(Department)
+    department = models.ForeignKey(
+        'accounts.Department',  # استفاده از رشته برای جلوگیری از circular import
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='users'
+    )
     is_active = models.BooleanField(default=True)
     is_verified = models.BooleanField(default=False)
-    is_staff = models.BooleanField(default=False)  # برای ورود به ادمین پنل
+    is_staff = models.BooleanField(default=False)
 
     objects = CustomUserManager()
 
