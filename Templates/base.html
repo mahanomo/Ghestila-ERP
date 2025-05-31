@@ -7,6 +7,11 @@
   <title>پنل مدیریت سازمان</title>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+  <!-- Persian Datepicker CSS -->
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/persian-date@1.1.0/dist/persian-date.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
 </head>
 <body>
   <div id="notification"></div>
@@ -15,31 +20,38 @@
     
     {% if user_role == 'employee' %}
     <a href="{%url 'website:index'%}" onclick="showSection('dashboard')">داشبورد</a>
+    <a href="{%url 'website:log-list'%}" onclick="showSection('dashboard')">گزارشات تایم کاری</a>
     <a href="{% url 'website:calender' %}" onclick="showSection('calendar')">تقویم کاری</a>
     <a href="{% url 'website:leave_request' %}" onclick="showSection('request')">درخواست مرخصی</a>
     <a href="{% url 'website:list_request' %}" onclick="showSection('status')">وضعیت درخواست‌ها</a>
     
     {% elif user_role == 'supervisor' %}
     <a href="{%url 'website:index'%}" onclick="showSection('dashboard')">داشبورد</a>
+    <a href="{%url 'website:log-list'%}" onclick="showSection('dashboard')">گزارشات تایم کاری</a>
     <a href="{% url 'website:calender' %}" onclick="showSection('calendar')">تقویم کاری</a>
     <a href="{% url 'website:leave_request' %}" onclick="showSection('request')">درخواست مرخصی</a>
     <a href="{% url 'website:list_request' %}" onclick="showSection('status')">وضعیت درخواست‌ها</a>
-    <a href="#" onclick="showSection('manager-check')">بررسی درخواست های ارسالی</a>
+    <a href="{% url 'website:check_requests' %}" onclick="showSection('manager-check')">بررسی درخواست های ارسالی</a>
     
     {% elif user_role == 'department_manager' %}
     <a href="{% url 'website:calender' %}" onclick="showSection('calendar')">تنظیم تقویم کاری</a>
+    <a href="{% url 'website:logs_manager' %}">مشاهده ی فعالیت کارمندان</a>
     <a href="{% url 'website:leave_request' %}" onclick="showSection('request')">درخواست مرخصی</a>
     <a href="{% url 'website:list_request' %}" onclick="showSection('status')">وضعیت درخواست‌ها</a>
-    <a href="#" onclick="showSection('manager-check')">بررسی درخواست های ارسالی</a>
+    <a href="{% url 'website:check_requests' %}" onclick="showSection('manager-check')">بررسی درخواست های ارسالی</a>
     
     {% elif user_role == 'human_resources' %}
+    <a href="{%url 'website:index'%}" onclick="showSection('dashboard')">داشبورد</a>
+    <a href="{%url 'website:log-list'%}" onclick="showSection('dashboard')">گزارشات تایم کاری</a>
     <a href="{% url 'website:calender' %}" onclick="showSection('calendar')">تقویم کاری</a>
+    {% comment %} <a href="{% url 'website:logs_manager' %}" onclick="showSection('calendar')">مشاهده ی فعالیت کارمندان</a> {% endcomment %}
     <a href="{% url 'website:leave_request' %}" onclick="showSection('request')">درخواست مرخصی</a>
     <a href="{% url 'website:list_request' %}" onclick="showSection('status')">وضعیت درخواست‌ها</a>
-    <a href="#" onclick="showSection('manager-check')">بررسی درخواست های ارسالی</a>
+    <a href="{% url 'website:check_requests' %}" onclick="showSection('manager-check')">بررسی درخواست های ارسالی</a>
     
     {% elif user_role == 'manager' %}
-    <a href="#" onclick="showSection('manager-check')">بررسی درخواست های ارسالی</a>
+    <a href="{% url 'website:check_requests' %}" onclick="showSection('manager-check')">بررسی درخواست های ارسالی</a>
+    <a href="{% url 'website:logs_manager' %}" onclick="showSection('calendar')">مشاهده ی فعالیت کارمندان</a>
     {% endif %}
   
   </div>

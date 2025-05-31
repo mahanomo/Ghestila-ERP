@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<style>
+.table_component {
+    {% comment %} margin-right:3%; {% endcomment %}
+    overflow: auto;
+    width: 100%;
+}
+.table_component table {
+    border: 1px solid #dededf;
+    height: 100%;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 1px;
+    text-align: center;
+}
+.table_component th {
+    border: 1px solid #dededf;
+    background-color: #34495E;
+    color: #FFFF;
+    padding: 4px;
+}
+
+.table_component td {
+    border: 1px solid #dededf;
+    background-color: #F5F6FA;
+    color: #34495E;
+    padding: 4px;
+}
+.table_component tr th:last-child,
+.table_component tr td:last-child {
+    width: 40%;
+}
+
+</style>
+<div style="margin-right:19%;">
+<h3>📅 لیست لاگ تایم‌ها</h3>
+<div class="table_component" >
+<table>
+    <tr><th>نام کارمند</th><th>تاریخ</th><th>  شروع</th><th>  پایان</th><th>  گزارش</th></tr>
+    {% for log in logs %}
+    <tr>
+        <td>{{ log.user.full_name }}</td>
+        <td>{{ log.date }}</td>
+        <td>  {{ log.start_time|date:"H:i" }}</td>
+        <td>  {{ log.end_time|date:"H:i" }}</td>
+        <td>  {{ log.report }}</td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+</div>
+{% endblock %}

@@ -4,15 +4,31 @@
 <div id="request" style="margin-right:19%;padding:1%;">
       <h1>درخواست مرخصی</h1>
       <form method="post" action="/leave-request/">
-        {% csrf_token %}
-        {{form}}
-        {% comment %} <label for="start">تاریخ شروع:</label>
-        <input type="date" id="start",name='start_day'>{% endcomment %}
-        {% comment %} <label for="end">تاریخ پایان:</label> 
-        <input type="date" id="end",name='end_day'>
-        <label for="reason">دلیل مرخصی:</label>
-        <textarea id="reason",name='description'></textarea>  {% endcomment %}
-        <button type="submit">ارسال درخواست</button>
-      </form>
+    {% csrf_token %}
+
+    <label>تاریخ شروع:</label><br>
+    <input type="text" id="start-day" name="start_day" required><br><br>
+
+    <label>تاریخ پایان:</label><br>
+    <input type="text" id="end-day" name="end_day" required><br><br>
+
+    <label>توضیحات:</label><br>
+    <textarea name="description" rows="4" required></textarea><br><br>
+
+    <button type="submit">ارسال درخواست</button>
+</form>
     </div>
+    <script>
+    $(document).ready(function() {
+        $("#start-day").persianDatepicker({
+            format: "YYYY-MM-DD",
+            initialValue: false,
+        });
+
+        $("#end-day").persianDatepicker({
+            format: "YYYY-MM-DD",
+            initialValue: false,
+        });
+    });
+</script>
 {% endblock %}

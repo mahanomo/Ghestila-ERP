@@ -1,11 +1,14 @@
 from django.db import models
 from accounts.models import Department,User
+import django_jalali.db.models as jmodels
+
+
 # Create your models here.
 class PlanTable(models.Model):
     department = models.ForeignKey(Department, on_delete=models.CASCADE, related_name="calendar_entries")
-    day = models.CharField(max_length=30)
+    day = models.CharField(max_length=30,verbose_name="روز")
     description = models.TextField()
-
+    
     def __str__(self):
         return self.day
     
@@ -20,16 +23,19 @@ class LeaveRequest(models.Model):
         ('pending_3', 'منتظر تایید مدیر منابع انسانی'),
         ('approved_3', 'تایید توسط مدیر منابع انسانی'),
         ('rejected_3', 'رد توسط مدیر منابع انسانی'),
+        ('pending_4', 'منتظر تایید مدیر'),
         ('approved_4', 'تایید نهایی'),
         ('rejected_4', 'رد نهایی'),
     ]
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='user_requester')
-    start_day = models.DateField()
-    end_day = models.DateField()
+    start_day = jmodels.jDateField()
+    end_day = jmodels.jDateField()
     description = models.TextField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending_1')
-    created_at = models.DateTimeField(auto_now_add=True) 
+    created_at = jmodels.jDateField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['-created_at']
     def __str__(self):
         return f'درخواست مرخصی {self.user.full_name} از تاریخ {self.start_day} تا {self.end_day}'
     
@@ -39,3 +45,13 @@ class StatusDiscoverImage(models.Model):
 
     def __str__(self):
         return self.status
+
+class WorkLog(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='work_logs')
+    start_time = models.DateTimeField(null=True, blank=True)
+    end_time = models.DateTimeField(null=True, blank=True)
+    report = models.TextField(null=True, blank=True)
+    date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.full_name} - {self.date}"

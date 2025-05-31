@@ -7,7 +7,7 @@
     {% if requests %}
     {% for request in requests %}
         <div class="request-box">
-            <p>درخواست مرخصی از {{request.start_day}} تا {{request.end_day}}</p>
+            <p>درخواست مرخصی از {{request.start_day}} تا {{request.end_day}} به دلیل: {{request.description}}</p>
             <p><a href='{% url "website:single_view_request" pid=request.id %}'>مشاهده ی وضعیت</a></p>
             
         </div>

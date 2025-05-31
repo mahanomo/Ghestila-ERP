@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div style="margin-right:20%">
+<form method="post">
+    {% csrf_token %}
+    
+    {{form.as_p}}
+    
+    <button type="submit">ثبت</button>
+</form>
+</div>
+<script>
+    $('#day_picker').persianDatepicker({
+        format: 'YYYY-MM-DD',
+        autoClose: true,
+        initialValue: false,
+    });
+</script>
+{% endblock %}

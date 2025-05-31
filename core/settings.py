@@ -37,8 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'jalali_date',
     'website',
     'accounts',
+    'jdatetime',
+    'django_jalali',
 ]
 
 MIDDLEWARE = [
@@ -114,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tehran'
 
 USE_I18N = True
 
@@ -139,3 +143,6 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.User'
 LOGIN_URL = '/accounts/login/'
+# config jalili
+LANGUAGE_CODE = 'fa-ir'
+USE_L10N = True

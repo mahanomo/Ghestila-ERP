@@ -8,7 +8,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = ("username", "full_name", "role","is_verified")
     list_filter = ("is_staff", "role","is_verified")
     fieldsets = (
-        ("Authenticate", {"fields": ("username", "password","role","department","is_verified","is_staff")}),
+        ("Authenticate", {"fields": ("username","full_name", "password","role","department","is_verified","is_staff")}),
         # (
         #     "Permissions",
         #     {

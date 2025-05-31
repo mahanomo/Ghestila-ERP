@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div id="status" style="float:right;margin-right:18%; width:80%;">
+    <h1>بررسی درخواست های ارسالی</h1>
+    {% if requests %}
+    {% for request in requests  %}
+    
+        <div class="request-box">
+            <p>درخواست مرخصی {{request.user.full_name}} از {{request.start_day}} تا {{request.end_day}} به دلیل: {{request.description}}</p> 
+            <p><a href='{% url "website:check_requests_manager" pid=request.id %}'>مشاهده ی وضعیت</a></p>
+        </div>
+    
+        {% endfor %}
+    {% else %}
+         <div class="request-box">
+            <p>درخواستی برای بررسی وجود ندارد</p>
+    {% endif %}
+    </div>
+
+{% endblock content %}

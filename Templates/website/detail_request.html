@@ -5,23 +5,23 @@
 <div id="status" style="float:right;margin-right:19%;">
     <h1>وضعیت درخواست‌</h1>
         <div class="request-box">
-            {{detail.status}}
+            {% comment %} {{detail.status}} {% endcomment %}
             {% if detail.status == 'pending_1' %}
             <img src='{{show_status.8.image.url}}'style='width:90%;' />
             
-            {% elif detail.status == 'approved_1' %}
+            {% elif detail.status == 'pending_2' %}
             <img src='{{show_status.7.image.url}}'style='width:90%;' />
             
             {% elif detail.status == 'rejected_1' %}
             <img src='{{show_status.6.image.url}}'style='width:90%;' />
             
-            {% elif detail.status == 'approved_2' %}
+            {% elif detail.status == 'pending_3' %}
             <img src='{{show_status.4.image.url}}'style='width:90%;' />
             
             {% elif detail.status == 'rejected_2' %}
             <img src='{{show_status.5.image.url}}'style='width:90%;' />
             
-            {% elif detail.status == 'approved_3' %}
+            {% elif detail.status == 'pending_4' %}
             <img src='{{show_status.2.image.url}}'style='width:90%;' />
             
             {% elif detail.status == 'rejected_3' %}

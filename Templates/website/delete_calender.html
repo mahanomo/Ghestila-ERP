@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="margin-right:19%;">
+<h2>آیا مطمئن هستید که می‌خواهید "{{ plan }}" را حذف کنید؟</h2>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">بله، حذف شود</button>
+    <a href="{% url 'website:calender' %}">لغو</a>
+</form>
+</div>
+{% endblock %}

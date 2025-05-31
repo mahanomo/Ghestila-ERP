@@ -2,16 +2,43 @@
 {% load static %}
 {% block content %}
 <h3 style="margin-right:19%;">تقویم کاری</h3>
+{% if user_role != 'department_manager' and user_role != 'manager' %}
 <div style="margin-right:18%">
-{% if calender %}
-{% for plan in calender %}
+    {% if calender %}
+    {% for plan in calender %}
     <div class="calendar-box" style="margin-right:2%;float:right; height: 3%; width: 40%;">
+
         <strong>{{plan.day}}</strong>
         <div class="calendar-note" style="margin-right:15%;">{{plan.description}}</div>
+
     </div>
     {% endfor %}
     {% else %}
     <div class="calendar-box" style="margin-right:19%;">
     <strong style='color:red;'>هیچ رویدادی ثبت نشده.</strong>
-    {% endif %}
-{% endblock %}
+    {% endif %}    
+    {% endif %}    
+    
+    {% if user_role == "manager" or user_role == "department_manager" %}
+  
+    <div style="margin-right:18%">
+        {% if calender %}
+        {% for plan in calender %}
+
+        <div class="calendar-box" style="margin-right:2%;float:right; height: 3%; width: 40%;">
+            <strong>{{plan.day}}</strong>
+            <div class="calendar-note" style="margin-right:15%;">{{plan.description}}</div>
+            <a href="{% url 'website:update_calender' plan.id %}">✏️ ویرایش</a>
+            <a href="{% url 'website:delete_calender' plan.id %}">🗑️ حذف</a>
+        </div>
+        {% endfor %}
+        {% else %}
+
+        <div class="calendar-box" style="margin-right:19%;">
+            <strong style='color:red;'>هیچ رویدادی ثبت نشده.</strong>
+
+            {% endif %}
+            <a href="{% url 'website:create_plan' %}">ثبت رویداد جدید</a>
+            {% endif %}
+
+            {% endblock %}
