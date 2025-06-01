@@ -150,7 +150,14 @@ def LeaveRequestView(request):
         if form.is_valid():
             leave = form.save(commit=False)
             leave.user = request.user
-            leave.status = 'pending_1'
+            if user_role == 'supervisor':
+                leave.status = "pending_2"
+            elif user_role == 'department_manager':
+                leave.status = "pending_3"
+            elif user_role == 'human_resources':
+                leave.status = "pending_4"
+            elif user_role == "employee":
+                leave.status = 'pending_1'
             leave.save()
             return redirect('/list-request/')
 

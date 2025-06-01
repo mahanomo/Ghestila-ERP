@@ -37,7 +37,7 @@ class LeaveRequest(models.Model):
     class Meta:
         ordering = ['-created_at']
     def __str__(self):
-        return f'درخواست مرخصی {self.user.full_name} از تاریخ {self.start_day} تا {self.end_day}'
+        return f'درخواست مرخصی {self.user.full_name}'
     
 class StatusDiscoverImage(models.Model):
     status = models.CharField(max_length=30)
@@ -51,7 +51,8 @@ class WorkLog(models.Model):
     start_time = models.DateTimeField(null=True, blank=True)
     end_time = models.DateTimeField(null=True, blank=True)
     report = models.TextField(null=True, blank=True)
-    date = models.DateField(auto_now_add=True)
+    date = jmodels.jDateField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.user.full_name} - {self.date}"
+    
