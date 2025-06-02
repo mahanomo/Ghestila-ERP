@@ -1,5 +1,3 @@
-// chat/static/room.js
-
 console.log("Sanity check from room.js.");
 
 const roomName = JSON.parse(document.getElementById('roomName').textContent);
@@ -9,7 +7,6 @@ let chatMessageInput = document.querySelector("#chatMessageInput");
 let chatMessageSend = document.querySelector("#chatMessageSend");
 let onlineUsersSelector = document.querySelector("#onlineUsersSelector");
 
-// adds a new option to 'onlineUsersSelector'
 function onlineUsersSelectorAdd(value) {
     if (document.querySelector("option[value='" + value + "']")) return;
     let newOption = document.createElement("option");
@@ -18,25 +15,79 @@ function onlineUsersSelectorAdd(value) {
     onlineUsersSelector.appendChild(newOption);
 }
 
-// removes an option from 'onlineUsersSelector'
 function onlineUsersSelectorRemove(value) {
     let oldOption = document.querySelector("option[value='" + value + "']");
     if (oldOption !== null) oldOption.remove();
 }
 
-// focus 'chatMessageInput' when user opens the page
+// focus input on load
 chatMessageInput.focus();
 
-// submit if the user presses the enter key
+// send message on enter
 chatMessageInput.onkeyup = function (e) {
-    if (e.keyCode === 13) {  // enter key
+    if (e.keyCode === 13) {
         chatMessageSend.click();
     }
 };
 
-// clear the 'chatMessageInput' and forward the message
+let chatSocket = null;
+
+function connect() {
+    chatSocket = new WebSocket("ws://" + window.location.host + "/ws/chat/" + roomName + "/");
+
+    chatSocket.onopen = function () {
+        console.log("Successfully connected to the WebSocket.");
+    };
+
+    chatSocket.onclose = function () {
+        console.log("WebSocket connection closed unexpectedly. Trying to reconnect in 2s...");
+        setTimeout(connect, 2000);
+    };
+
+    chatSocket.onerror = function (err) {
+        console.error("WebSocket encountered an error: ", err.message);
+        chatSocket.close();
+    };
+
+    chatSocket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        console.log(data);
+
+        switch (data.type) {
+            case "chat_message":
+                chatLog.value += data.user + ": " + data.message + "\n";
+                break;
+
+            case "user_list":
+                data.users.forEach(user => onlineUsersSelectorAdd(user));
+                break;
+
+            case "user_join":
+                chatLog.value += data.user + " joined the room.\n";
+                onlineUsersSelectorAdd(data.user);
+                break;
+
+            case "user_leave":
+                chatLog.value += data.user + " left the room.\n";
+                onlineUsersSelectorRemove(data.user);
+                break;
+
+            default:
+                console.error("Unknown message type:", data.type);
+        }
+
+        chatLog.scrollTop = chatLog.scrollHeight;
+    };
+}
+
+connect();
+
 chatMessageSend.onclick = function () {
-    if (chatMessageInput.value.length === 0) return;
-    // TODO: forward the message to the WebSocket
+    const message = chatMessageInput.value.trim();
+    if (message.length === 0 || !chatSocket || chatSocket.readyState !== WebSocket.OPEN) return;
+
+    chatSocket.send(JSON.stringify({
+        "message": message
+    }));
     chatMessageInput.value = "";
 };
