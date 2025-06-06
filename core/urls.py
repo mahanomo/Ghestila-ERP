@@ -25,6 +25,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('',include('website.urls')),
     path('chat/', include('chat.urls')),
+    path('api-auth/', include('rest_framework.urls')),
 ]
 # define static and media url
 if settings.DEBUG:

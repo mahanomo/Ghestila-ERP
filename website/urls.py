@@ -19,4 +19,6 @@ urlpatterns = [
     path('calendar/create/', views.create_plan, name='create_plan'),
     path('calendar/edit/<int:pk>/', views.update_plan, name='update_calender'),
     path('calendar/delete/<int:pk>/', views.delete_plan, name='delete_calender'),
+    # for saeid
+    path('api/', include('website.api.v1.urls')),
 ]

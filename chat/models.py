@@ -1,33 +1,20 @@
 from django.db import models
 from accounts.models import User
 
-# Create your models here.
-
-
-class Room(models.Model):
-    name = models.CharField(max_length=128)
-    online = models.ManyToManyField(to=User, blank=True)
-
-    def get_online_count(self):
-        return self.online.count()
-
-    def join(self, user):
-        self.online.add(user)
-        self.save()
-
-    def leave(self, user):
-        self.online.remove(user)
-        self.save()
+class ChatGroup(models.Model):
+    group_name = models.CharField(max_length=128, unique=True)
 
     def __str__(self):
-        return f'{self.name} ({self.get_online_count()})'
+        return self.group_name
 
-
-class Message(models.Model):
-    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
-    room = models.ForeignKey(to=Room, on_delete=models.CASCADE)
-    content = models.CharField(max_length=512)
-    timestamp = models.DateTimeField(auto_now_add=True)
+class GroupMessage(models.Model):
+    group = models.ForeignKey(ChatGroup, related_name='chat_messages', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    body = models.CharField(max_length=300)
+    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.user.username}: {self.content} [{self.timestamp}]'
+        return f'{self.author.username} : {self.body[:20]}...'
+
+    class Meta:
+        ordering = ['-created']
