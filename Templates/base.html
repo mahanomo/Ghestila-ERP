@@ -39,6 +39,7 @@
     <a href="{% url 'website:leave_request' %}" onclick="showSection('request')">درخواست مرخصی</a>
     <a href="{% url 'website:list_request' %}" onclick="showSection('status')">وضعیت درخواست‌ها</a>
     <a href="{% url 'website:check_requests' %}" onclick="showSection('manager-check')">بررسی درخواست های ارسالی</a>
+    <a href="{% url 'chat:chat-view' %}" onclick="showSection('manager-check')">چت آنلاین</a>
     
     {% elif user_role == 'human_resources' %}
     <a href="{%url 'website:index'%}" onclick="showSection('dashboard')">داشبورد</a>
@@ -52,6 +53,7 @@
     {% elif user_role == 'manager' %}
     <a href="{% url 'website:check_requests' %}" onclick="showSection('manager-check')">بررسی درخواست های ارسالی</a>
     <a href="{% url 'website:logs_manager' %}" onclick="showSection('calendar')">مشاهده ی فعالیت کارمندان</a>
+    <a href="{% url 'chat:chat-view' %}" onclick="showSection('manager-check')">چت آنلاین</a>
     {% endif %}
   
   </div>
